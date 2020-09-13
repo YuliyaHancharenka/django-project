@@ -1,0 +1,113 @@
+Used commands:
+python -m django --version
+django-admin startproject djangoProject
+python manage.py runserver
+python manage.py startapp TechCourse
+python manage.py migrate
+python manage.py makemigrations TechCourse
+python manage.py sqlmigrate TechCourse 0001
+
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro djangoProject % python manage.py shell
+Python 3.8.5 (default, Jul 21 2020, 10:48:26)
+[Clang 11.0.3 (clang-1103.0.32.62)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from TechCourse.models import Allcourses, Details
+>>> Allcourses.objects.all()
+<QuerySet []>
+>>> a=Allcourses(coursename='Python', insname='xyz')
+>>> a.save()
+>>> a.coursename
+'Python'
+>>> b=Allcourses(coursename='Java',insname='abc')
+>>> b.save()
+>>> b.coursename
+'Java'
+>>> a.id
+1
+>>> b.id
+2
+>>> b.pk
+2
+>>> Allcourses.objects.all()
+<QuerySet [<Allcourses: Allcourses object (1)>, <Allcourses: Allcourses object (2)>]>
+>>> exit()
+
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro djangoProject % python manage.py shell
+>>> from TechCourse.models import Allcourses, Details
+>>> Allcourses.objects.all()
+<QuerySet [<Allcourses: Python>, <Allcourses: Java>]>
+>>> Allcourses.objects.filter(id=1)
+<QuerySet [<Allcourses: Python>]>
+>>> Allcourses.objects.get(id=2)
+<Allcourses: Java>
+>>> exit()
+
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro djangoProject % python manage.py createsuperuser
+Username (leave blank to use 'yuliyahancharenka'): yuliya
+Email address: ladyjuliagoncharenko@gmail.com
+Password: 141986
+Superuser created successfully.
+
+python manage.py makemigrations TechCourse
+python manage.py migrate
+python manage.py sqlmigrate TechCourse 0002
+
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro djangoProject % python manage.py shell
+>>> from TechCourse.models import Allcourses, Details
+>>> Allcourses.objects.all()
+<QuerySet [<Allcourses: Python>, <Allcourses: Java>, <Allcourses: C>]>
+>>> from django.utils import timezone
+>>> import datetime
+>>> current_year = timezone.now().year
+>>> Allcourses.objects.get(started_from__year = current_year)
+TechCourse.models.Allcourses.MultipleObjectsReturned: get() returned more than one Allcourses -- it returned 3!
+>>> q=Allcourses.objects.get(pk=1)
+>>> q.get_publish_date()
+
+#some error appeared
+
+>>> course = Allcourses.objects.get(pk=2)
+>>> course.details_set.all()
+<QuerySet []>
+>>> course.details_set.create(course_type='Self paced')
+<Details: Self paced>
+>>> course.details_set.create(course_type='Instructor Yuliya')
+<Details: Instructor Yuliya>
+>>> course.details_set.count()
+2
+>>> course.details_set.all()
+<QuerySet [<Details: Self paced>, <Details: Instructor Yuliya>]>
+>>> course_next = Allcourses.objects.get(pk=1)
+>>> course_next.coursename
+'Python'
+>>> course_next.details_set.create(course_type='Self paced')
+<Details: Self paced>
+>>> course_next.details_set.create(course_type='Instructor Yuliya')
+<Details: Instructor Yuliya>
+>>> course_next.details_set.count()
+3
+>>> future_course=Allcourses(started_from=timezone.now()+datetime.timedelta(days=30))
+>>> future_course.get_publish_date()
+
+
+#tests
+>>> from django.test.utils import setup_test_environment
+>>> setup_test_environment
+<function setup_test_environment at 0x109a1c9d0>
+>>> from django.test import Client
+>>> client = Client()
+>>> response = client.get('/')
+
+
+
+#rest api
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro djangoProject % pip install djangorestframework
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro djangoProject % django-admin startproject restApiProject
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro djangoProject % cd restApiProject
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro restApiProject % python manage.py startapp restapiapp
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro restApiProject % python manage.py makemigrations
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro restApiProject % python manage.py migrate
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro restApiProject % python manage.py createsuperuser
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro restApiProject % python manage.py sqlmigrate restapiapp 0001
+(venv) yuliyahancharenka@Yuliyas-MacBook-Pro restApiProject % python manage.py runserver

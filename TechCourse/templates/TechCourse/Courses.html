@@ -1,0 +1,7 @@
+<h1>Welcome to my web site</h1>
+<ol>
+    {% for course in all_courses %}
+        <li><a href="/TechCourse/{{ course.id }}/">{{ course.coursename }}</a></li>
+    {% endfor %}
+
+</ol>

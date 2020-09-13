@@ -1,0 +1,29 @@
+{% if course.pk is 1 %}
+    <img src="https://qph.fs.quoracdn.net/main-qimg-28cadbd02699c25a88e5c78d73c7babc">
+    <h1><a href="https://www.youtube.com/watch?v=HRLIEgwYSHc&t=2080s">{{ course.coursename }}</a></h1>
+    <h2>{{ course.insname }}</h2>
+    <ul>
+        {% for course in Allcourses.set.all %}
+            <li>{{ course.course_type }}</li>
+        {% endfor %}
+    </ul>
+{% elif course.pk is 2 %}
+    <h1><a href="https://www.youtube.com/watch?v=wVNixBpvUOs">{{ course.coursename }}</a></h1>
+    <h2>{{ course.insname }}</h2>
+{% else %}
+    <h1>{{ course.coursename }}</h1>
+    <h2>{{ course.insname }}</h2>
+{% endif %}
+
+{% if error_message %} <p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+<form action="{% url 'TechCourse:is_interesting' course.id %}"
+      method="post">
+    {% csrf_token %}
+    {% for choice in course.details_set.all %}
+        <input type="radio" name="interest" id="interest{{ forloop.counter }}">
+        <label for="interest{{ forloop.counter }}">{{ interest.course_type }}</label><br>
+    {% endfor %}
+    <input type="submit" value="submit">
+</form>
