@@ -98,16 +98,3 @@ TechCourse.models.Allcourses.MultipleObjectsReturned: get() returned more than o
 >>> from django.test import Client
 >>> client = Client()
 >>> response = client.get('/')
-
-
-
-#rest api
-(venv) yuliyahancharenka@Yuliyas-MacBook-Pro djangoProject % pip install djangorestframework
-(venv) yuliyahancharenka@Yuliyas-MacBook-Pro djangoProject % django-admin startproject restApiProject
-(venv) yuliyahancharenka@Yuliyas-MacBook-Pro djangoProject % cd restApiProject
-(venv) yuliyahancharenka@Yuliyas-MacBook-Pro restApiProject % python manage.py startapp restapiapp
-(venv) yuliyahancharenka@Yuliyas-MacBook-Pro restApiProject % python manage.py makemigrations
-(venv) yuliyahancharenka@Yuliyas-MacBook-Pro restApiProject % python manage.py migrate
-(venv) yuliyahancharenka@Yuliyas-MacBook-Pro restApiProject % python manage.py createsuperuser
-(venv) yuliyahancharenka@Yuliyas-MacBook-Pro restApiProject % python manage.py sqlmigrate restapiapp 0001
-(venv) yuliyahancharenka@Yuliyas-MacBook-Pro restApiProject % python manage.py runserver
